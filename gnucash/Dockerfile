@@ -62,6 +62,7 @@ RUN apt-get update \
        dbus-x11 \
        guile-2.2-libs \
        libboost-all-dev \
+       libdbi1 \
        libfinance-quote-perl \
        libglib2.0-0 \
        libgtk-3.0 \
