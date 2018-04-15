@@ -11,5 +11,7 @@ RUN mkdir -p /etc/myservices/sshd /var/run/sshd \
     && sed -i -e 's/.\?X11UseLocalhost.*/X11UseLocalhost no/' /etc/ssh/sshd_config
 RUN useradd -m -s /usr/bin/gnucash gnucash \
     && echo 'gnucash:gnucash' | chpasswd
+RUN mkdir -p /home/gnucash/data \
+    && chown gnucash.gnucash /home/gnucash/data
 EXPOSE 22
 ENTRYPOINT ["/usr/bin/svscan", "/etc/myservices/"]
