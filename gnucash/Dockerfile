@@ -13,4 +13,4 @@ RUN apt-get update \
 ENV ALPHAVANTAGE_API_KEY ${ALPHAVANTAGE_API_KEY}
 RUN echo "ALPHAVANTAGE_API_KEY=${ALPHAVANTAGE_API_KEY}" >> /etc/gnucash/environment \
     && gnc-fq-update
-ENTRYPOINT ["/usr/local/bin/gnucash"]
+ENTRYPOINT ["/usr//bin/gnucash"]
