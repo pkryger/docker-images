@@ -9,7 +9,7 @@ RUN mkdir -p /etc/myservices/sshd /var/run/sshd \
     && echo "#!/bin/bash\nexec /usr/sbin/sshd" > /etc/myservices/sshd/run \
     && chmod +x /etc/myservices/sshd/run \
     && sed -i -e 's/.\?X11UseLocalhost.*/X11UseLocalhost no/' /etc/ssh/sshd_config
-RUN useradd -m -s /usr/bin/gnucash gnucash \
+RUN useradd -m -s /usr/local/bin/gnucash gnucash \
     && echo 'gnucash:gnucash' | chpasswd
 RUN mkdir -p /home/gnucash/data \
     && chown gnucash.gnucash /home/gnucash/data

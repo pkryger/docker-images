@@ -44,13 +44,15 @@ RUN git clone --verbose https://github.com/Gnucash/gnucash.git /gnucash-src \
 RUN mkdir /gnucash-build \
     && cd /gnucash-build \
     && cmake \
-       -DCMAKE_INSTALL_PREFIX=/usr \
        -DWITH_AQBANKING=OFF \
-       -DWITH_OFX=OFF ../gnucash-src \
+       -DWITH_OFX=OFF \
+       -DGTEST_ROOT=/usr/src/googletest/googlemock \
+       -DGMOCK_ROOT=/usr/src/googletest/googlemock \
+       ../gnucash-src \
     && make -j 8
 RUN mkdir /gnucash-install \
     && cd /gnucash-build \
-    && make -j 8 install DESTDIR=/gnucash-install
+    && make -j 8 DESTDIR=/gnucash-install install
 
 FROM ubuntu:devel
 
@@ -77,12 +79,8 @@ COPY --from=builder /gnucash-install /
 # Gnucash fixups:
 # - Add the AlphaVantage API key (use the legacy method, it seems to be OK in
 #   gnucash 3.0),
-# - Compile schemas to fix the
-#   "Settings schema 'org.gtk.Settings.FileChooser' is not installed" issue,
-#   as apparently schemas are recompiled during build.
 # - Make sure the 'Finance::Quote' is up to date
 ENV ALPHAVANTAGE_API_KEY ${ALPHAVANTAGE_API_KEY}
-RUN echo "ALPHAVANTAGE_API_KEY=${ALPHAVANTAGE_API_KEY}" >> /etc/gnucash/environment \
-    && glib-compile-schemas /usr/share/glib-2.0/schemas \
+RUN echo "ALPHAVANTAGE_API_KEY=${ALPHAVANTAGE_API_KEY}" >> /usr/local/etc/gnucash/environment \
     && gnc-fq-update
-ENTRYPOINT ["/usr/bin/gnucash"]
+ENTRYPOINT ["/usr/local/bin/gnucash"]
