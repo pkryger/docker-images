@@ -1,4 +1,4 @@
-FROM ubuntu:devel as builder
+FROM debian:unstable as builder
 
 ARG GNUCASH_SRC_CHECKOUT=master
 
@@ -14,6 +14,7 @@ RUN apt-get update \
     gtk+3.0 \
     guile-2.2 \
     guile-2.2-dev \
+    g++ \
     icu-devtools \
     intltool \
     libboost-all-dev \
@@ -48,13 +49,15 @@ RUN mkdir /gnucash-build \
        -DWITH_OFX=OFF \
        -DGTEST_ROOT=/usr/src/googletest/googlemock \
        -DGMOCK_ROOT=/usr/src/googletest/googlemock \
+       -DCMAKE_CXX_FLAGS="-DBOOST_UUID_RANDOM_PROVIDER_FORCE_POSIX" \
+       -DCMAKE_EXPORT_COMPILE_COMMANDS=1 \
        ../gnucash-src \
     && make -j 8
 RUN mkdir /gnucash-install \
     && cd /gnucash-build \
     && make -j 8 DESTDIR=/gnucash-install install
 
-FROM ubuntu:devel
+FROM debian:unstable
 
 ARG ALPHAVANTAGE_API_KEY
 

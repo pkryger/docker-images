@@ -1,4 +1,4 @@
-FROM ubuntu:devel
+FROM debian:unstable
 
 ARG ALPHAVANTAGE_API_KEY
 
