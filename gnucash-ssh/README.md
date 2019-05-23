@@ -25,5 +25,5 @@ docker run -d --name gnucash-ssh1 -p <HOST_PORT>:22 -v gnucash-data:/home/gnucas
 
 When the container is running, `GnuCash` can be started with:
 ```bash
-ssh -l gnucash -o "ForwardX11=yes" -p <HOST_PORT> <HOST_IP>
+ssh -l gnucash -o "ForwardX11=yes" -p <HOST_PORT> -Y <HOST_IP>
 ```
