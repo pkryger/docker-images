@@ -7,6 +7,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 ENV LINGUAS=en
 
 RUN apt-get update \
+    && apt-get upgrade \
     && apt-get install -y \
     cmake \
     git \
@@ -62,6 +63,7 @@ FROM debian:unstable
 ARG ALPHAVANTAGE_API_KEY
 
 RUN apt-get update \
+    && apt-get upgrade \
     && apt-get install -y \
        daemontools \
        dbus-x11 \
