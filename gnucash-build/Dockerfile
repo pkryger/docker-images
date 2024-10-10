@@ -76,8 +76,13 @@ ARG ALPHAVANTAGE_API_KEY
 ARG FINANCEAPI_API_KEY
 
 RUN apt-get update \
-    && apt-get upgrade -y \
-    && apt-get install -y \
+    && apt-get upgrade -y
+
+# Repeat systemd workaround on Synology
+RUN apt-get install -y systemd \
+    || (rm /var/lib/dpkg/info/systemd.postinst /var/lib/dpkg/info/systemd-timesyncd.postinst \
+       && dpkg --configure -a)
+RUN apt-get install -y \
        daemontools \
        dbus-x11 \
        guile-3.0-libs \
