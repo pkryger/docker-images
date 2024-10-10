@@ -88,7 +88,7 @@ RUN apt-get update \
        libpango1.0 \
        libsecret-1-0 \
        libwebkit2gtk-4.1 \
-       libxml-2 \
+       libxml2 \
        libxslt1.1 \
        ninja-build \
        openssh-server \
