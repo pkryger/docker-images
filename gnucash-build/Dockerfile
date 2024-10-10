@@ -7,8 +7,22 @@ ENV DEBIAN_FRONTEND=noninteractive
 ENV LINGUAS=en
 
 RUN apt-get update \
-    && apt-get upgrade -y \
-    && apt-get install -y \
+    && apt-get upgrade -y
+
+# Workaround systemd installation failure on Synology. Error:
+# Setting up systemd (256.7-1) ...
+# Created symlink '/etc/systemd/system/getty.target.wants/getty@tty1.service' → '/usr/lib/systemd/system/getty@.service'.
+# Created symlink '/etc/systemd/system/multi-user.target.wants/remote-fs.target' → '/usr/lib/systemd/system/remote-fs.target'.
+# Created symlink '/etc/systemd/system/sysinit.target.wants/systemd-pstore.service' → '/usr/lib/systemd/system/systemd-pstore.service'.
+# Initializing machine ID from random generator.
+# Failed to take /etc/passwd lock: Invalid argument
+# dpkg: error processing package systemd (--configure):
+#  installed systemd package post-installation script subprocess returned error exit status 1
+RUN apt-get install -y systemd \
+    || (mv /var/lib/dpkg/info/systemd.postinst /var/lib/dpkg/info/systemd-timesyncd.postinst /tmp/ \
+       && dpkg --configure -a)
+
+RUN apt-get install -y \
     cmake \
     git \
     gettext \
