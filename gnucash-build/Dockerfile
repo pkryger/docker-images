@@ -65,10 +65,10 @@ RUN mkdir /gnucash-build \
        -DCMAKE_CXX_FLAGS="-DBOOST_UUID_RANDOM_PROVIDER_FORCE_POSIX" \
        -DCMAKE_EXPORT_COMPILE_COMMANDS=1 \
        ../gnucash-src \
-    && ninja -j 2
+    && ninja -j 1
 RUN mkdir /gnucash-install \
     && cd /gnucash-build \
-    && DESTDIR=/gnucash-install ninja install
+    && DESTDIR=/gnucash-install ninja -j 1 install
 
 FROM debian:unstable
 
