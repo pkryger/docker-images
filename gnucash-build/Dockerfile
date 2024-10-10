@@ -83,8 +83,8 @@ RUN apt-get update \
        guile-3.0-libs \
        libboost-all-dev \
        libfinance-quote-perl \
-       libglib2.0-0 \
-       libgtk-3.0 \
+       libglib2.0-0t64 \
+       libgtk-3.0t64 \
        libpango1.0 \
        libsecret-1-0 \
        libwebkit2gtk-4.1 \
