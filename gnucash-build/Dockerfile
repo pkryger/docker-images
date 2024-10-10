@@ -34,8 +34,7 @@ RUN apt-get update \
     ninja-build \
     swig \
     xsltproc \
-    zlib1g-dev \
-
+    zlib1g-dev
 
 RUN git clone --verbose https://github.com/Gnucash/gnucash.git /gnucash-src \
     && cd /gnucash-src \
@@ -80,8 +79,7 @@ RUN apt-get update \
        ninja-build \
        openssh-server \
        perl \
-       zlib1g \
-
+       zlib1g
 
 COPY --from=builder /gnucash-install /
 
