@@ -19,7 +19,7 @@ RUN apt-get update \
 # dpkg: error processing package systemd (--configure):
 #  installed systemd package post-installation script subprocess returned error exit status 1
 RUN apt-get install -y systemd \
-    || (mv /var/lib/dpkg/info/systemd.postinst /var/lib/dpkg/info/systemd-timesyncd.postinst /tmp/ \
+    || (rm /var/lib/dpkg/info/systemd.postinst /var/lib/dpkg/info/systemd-timesyncd.postinst \
        && dpkg --configure -a)
 
 RUN apt-get install -y \
