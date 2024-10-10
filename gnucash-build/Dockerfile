@@ -65,7 +65,7 @@ RUN mkdir /gnucash-build \
        -DCMAKE_CXX_FLAGS="-DBOOST_UUID_RANDOM_PROVIDER_FORCE_POSIX" \
        -DCMAKE_EXPORT_COMPILE_COMMANDS=1 \
        ../gnucash-src \
-    && ninja
+    && ninja -j 2
 RUN mkdir /gnucash-install \
     && cd /gnucash-build \
     && DESTDIR=/gnucash-install ninja install
