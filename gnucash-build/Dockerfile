@@ -11,33 +11,31 @@ RUN apt-get update \
     && apt-get install -y \
     cmake \
     git \
-    google-mock \
+    gettext \
+    googletest \
     gtk+3.0 \
-    guile-2.2 \
-    guile-2.2-dev \
+    guile-3.0 \
+    guile-3.0-dev \
     g++ \
     icu-devtools \
     intltool \
     libboost-all-dev \
-    libdbd-mysql \
-    libdbi-dev \
     libglib2.0-dev \
     libgtest-dev \
+    libgmock-dev \
     libgtk-3-dev \
     libicu-dev \
-    libltdl-dev \
-    libtool \
-    libwebkit2gtk-4.0-37 \
-    libwebkit2gtk-4.0-dev \
-    libxml++2.6-dev \
+    libpango1.0-dev \
+    libsecret-1-dev \
+    libwebkit2gtk-4.1 \
+    libwebkit2gtk-4.1-dev \
+    libxml++2-dev \
     libxslt1-dev \
-    make \
+    ninja-build \
     swig \
-    xsltproc
+    xsltproc \
+    zlib1g-dev \
 
-# TODO: likely will be needed when add ing aqbanking and ofx, merge to above list
-#RUN apt-get install -y libaqbanking-dev
-#RUN apt-get install -y libofx-dev
 
 RUN git clone --verbose https://github.com/Gnucash/gnucash.git /gnucash-src \
     && cd /gnucash-src \
@@ -46,38 +44,44 @@ RUN git clone --verbose https://github.com/Gnucash/gnucash.git /gnucash-src \
 RUN mkdir /gnucash-build \
     && cd /gnucash-build \
     && cmake \
+       -GNinja \
+       -DWITH_SQL=OFF \
        -DWITH_AQBANKING=OFF \
        -DWITH_OFX=OFF \
-       -DGTEST_ROOT=/usr/src/googletest/googlemock \
-       -DGMOCK_ROOT=/usr/src/googletest/googlemock \
+       -DGTEST_ROOT=/usr/src/googletest \
        -DCMAKE_CXX_FLAGS="-DBOOST_UUID_RANDOM_PROVIDER_FORCE_POSIX" \
        -DCMAKE_EXPORT_COMPILE_COMMANDS=1 \
        ../gnucash-src \
-    && make -j 8
+    && ninja
 RUN mkdir /gnucash-install \
     && cd /gnucash-build \
-    && make -j 8 DESTDIR=/gnucash-install install
+    && DESTDIR=/gnucash-install ninja install
 
 FROM debian:unstable
 
 ARG ALPHAVANTAGE_API_KEY
+ARG FINANCEAPI_API_KEY
 
 RUN apt-get update \
     && apt-get upgrade \
     && apt-get install -y \
        daemontools \
        dbus-x11 \
-       guile-2.2-libs \
+       guile-3.0-libs \
        libboost-all-dev \
-       libdbi1 \
        libfinance-quote-perl \
        libglib2.0-0 \
        libgtk-3.0 \
-       libwebkit2gtk-4.0-37 \
+       libpango1.0 \
+       libsecret-1-0 \
+       libwebkit2gtk-4.1 \
+       libxml-2 \
        libxslt1.1 \
-       make \
+       ninja-build \
        openssh-server \
-       perl
+       perl \
+       zlib1g \
+
 
 COPY --from=builder /gnucash-install /
 
@@ -87,5 +91,6 @@ COPY --from=builder /gnucash-install /
 # - Make sure the 'Finance::Quote' is up to date
 ENV ALPHAVANTAGE_API_KEY ${ALPHAVANTAGE_API_KEY}
 RUN echo "ALPHAVANTAGE_API_KEY=${ALPHAVANTAGE_API_KEY}" >> /usr/local/etc/gnucash/environment \
+    echo "FINANCEAPI_API_KEY=${FINANCEAPI_API_KEY}" >> /usr/local/etc/gnucash/environment \
     && gnc-fq-update
 ENTRYPOINT ["/usr/local/bin/gnucash"]
