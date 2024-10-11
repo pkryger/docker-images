@@ -83,31 +83,39 @@ RUN apt-get install -y systemd \
     || (rm /var/lib/dpkg/info/systemd.postinst /var/lib/dpkg/info/systemd-timesyncd.postinst \
        && dpkg --configure -a)
 RUN apt-get install -y \
-       daemontools \
-       dbus-x11 \
-       guile-3.0-libs \
-       libboost-all-dev \
-       libfinance-quote-perl \
-       libglib2.0-0t64 \
-       libgtk-3.0t64 \
-       libpango1.0 \
-       libsecret-1-0 \
-       libwebkit2gtk-4.1 \
-       libxml2 \
-       libxslt1.1 \
-       ninja-build \
-       openssh-server \
-       perl \
-       zlib1g
+      daemontools \
+      dbus-x11 \
+      g++ \
+      gcc \
+      guile-3.0-libs \
+      libboost-all-dev \
+      libfinance-quote-perl \
+      libglib2.0-0t64 \
+      libgtk-3.0t64 \
+      libpango1.0 \
+      libsecret-1-0 \
+      libssl-dev \
+      libwebkit2gtk-4.1 \
+      libxml2 \
+      libxml2-dev \
+      libxslt1.1 \
+      make \
+      ninja-build \
+      openssh-server \
+      openssl \
+      perl \
+      zlib1g \
+      zlib1g-dev
 
 COPY --from=builder /gnucash-install /
 
-# Gnucash fixups:
-# - Add the AlphaVantage API key (use the legacy method, it seems to be OK in
-#   gnucash 3.0),
-# - Make sure the 'Finance::Quote' is up to date
+# Add the AlphaVantage API key (use the legacy method, it seems to be OK in gnucash 5.9
 ENV ALPHAVANTAGE_API_KEY ${ALPHAVANTAGE_API_KEY}
 RUN echo "ALPHAVANTAGE_API_KEY=${ALPHAVANTAGE_API_KEY}" >> /usr/local/etc/gnucash/environment \
     echo "FINANCEAPI_API_KEY=${FINANCEAPI_API_KEY}" >> /usr/local/etc/gnucash/environment \
-    && gnc-fq-update
+
+# Install Finance::Quote
+RUN echo yes | cpan App::cpanminus
+RUN cpanm Finance::Quote JSON::Parse
+
 ENTRYPOINT ["/usr/local/bin/gnucash"]
