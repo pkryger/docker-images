@@ -63,6 +63,7 @@ RUN mkdir /gnucash-build \
        -DWITH_OFX=OFF \
        -DGTEST_ROOT=/usr/src/googletest \
        -DCMAKE_CXX_FLAGS="-DBOOST_UUID_RANDOM_PROVIDER_FORCE_POSIX" \
+       -DCMAKE_BUILD_TYPE=Release \
        -DCMAKE_EXPORT_COMPILE_COMMANDS=1 \
        ../gnucash-src \
     && ninja -j 1
