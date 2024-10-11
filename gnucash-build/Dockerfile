@@ -112,7 +112,7 @@ COPY --from=builder /gnucash-install /
 # Add the AlphaVantage API key (use the legacy method, it seems to be OK in gnucash 5.9
 ENV ALPHAVANTAGE_API_KEY ${ALPHAVANTAGE_API_KEY}
 RUN echo "ALPHAVANTAGE_API_KEY=${ALPHAVANTAGE_API_KEY}" >> /usr/local/etc/gnucash/environment \
-    echo "FINANCEAPI_API_KEY=${FINANCEAPI_API_KEY}" >> /usr/local/etc/gnucash/environment \
+    echo "FINANCEAPI_API_KEY=${FINANCEAPI_API_KEY}" >> /usr/local/etc/gnucash/environment
 
 # Install Finance::Quote
 RUN echo yes | cpan App::cpanminus
