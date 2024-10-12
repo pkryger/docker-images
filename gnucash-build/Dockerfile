@@ -120,4 +120,9 @@ RUN echo echo "[Variables]" >> /usr/local/etc/gnucash/environment.local \
 RUN echo yes | cpan App::cpanminus
 RUN cpanm Finance::Quote JSON::Parse
 
-ENTRYPOINT ["/usr/local/bin/gnucash"]
+
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+ENTRYPOINT ["/entrypoint.sh"]
+CMD ["/usr/local/bin/gnucash"]
