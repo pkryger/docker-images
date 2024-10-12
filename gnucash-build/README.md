@@ -1,21 +1,26 @@
-# Build development version of GnuCash
+# Build development version of GnuCash for Synology
 
 This is a `Dockerfile` that builds a [GnuCash](https://www.gnucash.org) from
-the source as published in [GitHub repository](https://github.com/Gnucash/gnucash).
-It was originally designed to serve as a basic image for other images, as in sibling
-directories
+the source as published in [GitHub
+repository](https://github.com/Gnucash/gnucash).  It was originally designed to
+serve as a basic image for other images, as in sibling directories.
 
-It has been written using build instructions from
-[GnuCash Wiki](https://wiki.gnucash.org/wiki/Building#Ubuntu_16.04_LTS_.28Xenial_Xerus.29).
+Note that this build is performed on a Synology DSM host, hence it has some
+workarounds that may be not applicable to other systems.
+
+It has been written using build instructions from [GnuCash
+Wiki](https://wiki.gnucash.org/wiki/Building#Ubuntu_16.04_LTS_.28Xenial_Xerus.29).
 
 The build requires following arguments:
 - `GNUCASH_SRC_CHECKOUT` the name of the tag to be passed to checkout git
   source, i.e., `5.9`. Default: `master`.
-- `ALPHAVANTAGE_API_KEY` the key to use to fetch quotes from
-  [Alpha Vantage](https://www.alphavantage.co).
-- `FINANCEAPI_API_KEY` the key to fetch quotes from [Yahoo! Finance](finance.yahoo.com).
+- `ALPHAVANTAGE_API_KEY` the key to use to fetch quotes from [Alpha
+  Vantage](https://www.alphavantage.co).
+- `FINANCEAPI_API_KEY` the key to fetch quotes from [Yahoo!
+  Finance](finance.yahoo.com).
 
-Although it is possible to enter the key in GUI menu, specifying it when building image allows the GnuCash to be run in headless mode.
+Although it is possible to enter the key in GUI menu, specifying it when
+building image allows the GnuCash to be run in headless mode.
 
 The image can be built with the following instruction:
 
