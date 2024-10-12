@@ -112,9 +112,7 @@ COPY --from=builder /gnucash-install /
 
 # Configure environment for Finance::Quote by adding environment variables
 ENV ALPHAVANTAGE_API_KEY ${ALPHAVANTAGE_API_KEY}
-RUN echo echo "[Variables]" >> /usr/local/etc/gnucash/environment.local \
-    && echo "ALPHAVANTAGE_API_KEY=${ALPHAVANTAGE_API_KEY}" >> /usr/local/etc/gnucash/environment.local \
-    && echo "FINANCEAPI_API_KEY=${FINANCEAPI_API_KEY}" >> /usr/local/etc/gnucash/environment.local
+ENV FINANCEAPI_API_KEY ${FINANCEAPI_API_KEY}
 
 # Install Finance::Quote
 RUN echo yes | cpan App::cpanminus
