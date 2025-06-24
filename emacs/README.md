@@ -12,6 +12,7 @@ docker build -t pkryger/emacs:30.1 \
 Then run something along the lines:
 ```bash
 docker run --rm -it \
+    --label=com.centurylinklabs.watchtower.enable=false \
     --volume "${HOME}:${HOME}" \
     --volume /volume1:/volume1 \
     --workdir "$(if [[ "$(pwd)/" ==  "${HOME}/"* ]] \
