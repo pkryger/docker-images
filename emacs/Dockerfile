@@ -12,14 +12,6 @@ run apt-get update                              \
     && apt-get autoremove --yes                 \
     && rm -rf /var/lib/{apt,dpkg,cache,log}/
 
-# Replicating Synology user pkryger
-# check value of --gid with:
-# $ grep -e '^users:' /etc/group | cut -f 1,3 -d ':'
-# check value of --base-dir with:
-# $ dirname "$(realpath "${HOME}")"
-# check value of --uid with:
-# $ grep -e '^pkryger:' /etc/passwd | cut -f 1,3 -d ':'
-
 arg SYNO_GID
 arg SYNO_UID
 arg SYNO_BASE
