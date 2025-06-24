@@ -1,4 +1,4 @@
-# Build development version of GnuCash for Synology
+# Build Tagged (or Development) Version of GnuCash for Synology
 
 This is a `Dockerfile` that builds a [GnuCash](https://www.gnucash.org) from
 the source as published in [GitHub
@@ -28,6 +28,20 @@ The image can be built with the following instruction:
 docker build -t gnucash:5.9-devel --build-arg ALPHAVANTAGE_API_KEY=<YOUR_KEY> --build-arg FINANCEAPI_API_KEY=<YOUR_KEY> --build-arg GNUCASH_SRC_CHECKOUT=5.9 .
 ```
 
+## Running `gnucash-cli` to Fetch Finance Quotes
+To fetch updated finance quotes, you can do something like:
+
+```bash
+docker run --rm                                         \
+    -v /volume1/gnucash:/gnucash                        \
+    --label=com.centurylinklabs.watchtower.enable=false \
+    gnucash:5.9-finance_quote                           \
+        /usr/local/bin/gnucash-cli                      \
+            --log gnc.price-quotes=debug                \
+            --quotes get ${GNUCASH_FILE}
+```
+
+## Running GUI on macOS
 To run the container on macOS, the following dependencies are required:
 - `socat`
 - `XQuartz`
