@@ -4,6 +4,10 @@ from silex/emacs:${EMACS_VERSION}
 label com.centurylinklabs.watchtower.enable="false"
 run apt-get update                              \
     && apt-get install -y                       \
+        shellcheck                              \
+        curl                                    \
+        python3                                 \
+        apt-file                                \
         g++                                     \
         gcc                                     \
         git                                     \
