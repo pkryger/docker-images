@@ -1,6 +1,7 @@
 arg EMACS_VERSION=30.1
 from silex/emacs:${EMACS_VERSION}
 
+label com.centurylinklabs.watchtower.enable="false"
 run apt-get update                              \
     && apt-get install -y                       \
         g++                                     \
