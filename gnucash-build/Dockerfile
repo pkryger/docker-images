@@ -1,5 +1,7 @@
 FROM debian:unstable as builder
 
+LABEL com.centurylinklabs.watchtower.enable="false"
+
 ARG GNUCASH_SRC_CHECKOUT=master
 
 ENV GNUCASH_SRC_CHECKOUT=${GNUCASH_SRC_CHECKOUT}
