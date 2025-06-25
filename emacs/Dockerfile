@@ -17,6 +17,13 @@ run apt-get update                              \
     && apt-get autoremove --yes                 \
     && rm -rf /var/lib/{apt,dpkg,cache,log}/
 
+copy xterm-24bit.terminfo /tmp
+run tic -x /tmp/xterm-24bit.terminfo \
+    && rm /tmp/xterm-24bit.terminfo
+
+env TERM=xterm-24bit
+env TERMINFO=/etc/terminfo
+
 arg SYNO_GID
 arg SYNO_UID
 arg SYNO_BASE
