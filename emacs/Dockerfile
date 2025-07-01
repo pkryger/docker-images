@@ -1,7 +1,5 @@
 from nixos/nix as builder
 
-run nix-channel --update
-
 # Emacs build like in in https://github.com/Silex/docker-emacs/blob/3e24a9a/dockerfiles/debian/Dockerfile#L1-L6
 # But then used a method as described in https://mitchellh.com/writing/nix-with-dockerfiles
 arg EMACS_VERSION=emacs-30-1
