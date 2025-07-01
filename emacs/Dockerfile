@@ -29,7 +29,7 @@ run nix build                                           \
     nixpkgs#silver-searcher                             \
     nixpkgs#wget                                        \
     nixpkgs#which                                       \
-    "github:purcell/nix-emacs-ci#${EMACS_VERSION}"
+    nixpkgs#emacs-nox
 
 run mkdir /tmp/nix-store-closure && \
     cp -R $(nix-store -qR result*/) /tmp/nix-store-closure
