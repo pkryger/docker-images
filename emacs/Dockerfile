@@ -42,13 +42,13 @@ from debian
 label com.centurylinklabs.watchtower.enable="false"
 
 copy --from=builder /tmp/nix-store-closure /nix/store
-copy --from=builder /tmp/nix-result /nix-profile
-env PATH="/nix-profile/bin${PATH:+:${PATH}}"
-env MANPATH="/nix-profile/man${MANPATH:+:${MANPATH}}"
+copy --from=builder /tmp/nix-result /opt/nix
+env PATH="/opt/nix/bin${PATH:+:${PATH}}"
+env MANPATH="/opt/nix/man${MANPATH:+:${MANPATH}}"
 
 # Link certificates from nixpkgs#cacert to system root and export environment
 # variables
-run ln -s /nix-profile/etc/ssl /etc/
+run ln -s /opt/nix/etc/ssl /etc/
 env SSL_CERT_FILE=/etc/ssl/certs/ca-bundle.crt
 env GIT_SSL_CAINFO=${SSL_CERT_FILE}
 env CURL_CA_BUNDLE=${SSL_CERT_FILE}
