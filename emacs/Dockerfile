@@ -32,6 +32,11 @@ run nix build                                           \
     nixpkgs#silver-searcher                             \
     nixpkgs#wget                                        \
     nixpkgs#which                                       \
+    nixpkgs#zsh                                         \
+    nixpkgs#zsh-autopair                                \
+    nixpkgs#zsh-autosuggestions                         \
+    nixpkgs#zsh-fast-syntax-highlighting                \
+    nixpkgs#zsh-powerlevel10k                           \
     nixpkgs#emacs-nox
 
 run mkdir /tmp/nix-store-closure && \
@@ -77,3 +82,18 @@ run if [ ! "$(grep -e "[^:]\+:[^:]\+:${SYNO_GID}:.*" /etc/group)" ];    \
         --gid ${SYNO_GID}                                               \
         --uid ${SYNO_UID}                                               \
         ${SYNO_USER}
+
+# Install fancy ZSH configuration
+env ZSH=/opt/nix/share/oh-my-zsh
+run mkdir -p ${SYNO_BASE}/${SYNO_USER} &&                                                   \
+    ln -s /opt/nix/share/zsh-powerlevel10k /opt/nix/share/powerlevel10k &&                  \
+    ln -s /opt/nix/share/zsh/zsh-autopair /opt/nix/share/zsh-autopair &&                    \
+    curl -L https://iterm2.com/shell_integration/zsh                                        \
+        -o ${SYNO_BASE}/${SYNO_USER}/.iterm2_shell_integration.zsh &&                       \
+    curl -L https://raw.githubusercontent.com/pkryger/dotfiles/refs/heads/main/.p10k.zsh    \
+        -o ${SYNO_BASE}/${SYNO_USER}/.p10k.zsh &&                                           \
+    curl -L https://raw.githubusercontent.com/pkryger/dotfiles/refs/heads/main/.zshrc       \
+        -o ${SYNO_BASE}/${SYNO_USER}/.zshrc &&                                              \
+    chown -R ${SYNO_USER}:${SYNO_GID} ${SYNO_BASE}/${SYNO_USER}
+
+cmd [ "/opt/nix/bin/zsh" ]
