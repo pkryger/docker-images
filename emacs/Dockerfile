@@ -35,10 +35,10 @@ run nix build                                           \
     nixpkgs#emacs-nox
 
 run mkdir /tmp/nix-store-closure && \
-    cp -R $(nix-store -qR result*/) /tmp/nix-store-closure
+    cp -uR $(nix-store -qR result*/) /tmp/nix-store-closure
 
 run mkdir /tmp/nix-result && \
-    cp -R result*/* /tmp/nix-result
+    cp -uR result*/* /tmp/nix-result
 
 from debian
 
