@@ -10,13 +10,17 @@ run nix build                                           \
     nixpkgs#cmake                                       \
     nixpkgs#curl                                        \
     nixpkgs#difftastic                                  \
+    nixpkgs#direnv                                      \
     nixpkgs#findutils                                   \
     nixpkgs#gcc                                         \
     nixpkgs#git                                         \
     nixpkgs#gnumake                                     \
+    nixpkgs#iconv                                       \
     nixpkgs#jq                                          \
     nixpkgs#less                                        \
     nixpkgs#man                                         \
+    nixpkgs#nix-zsh-completions                         \
+    nixpkgs#oh-my-zsh                                   \
     nixpkgs#openssh                                     \
     nixpkgs#perl                                        \
     nixpkgs#python313                                   \
