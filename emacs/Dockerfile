@@ -5,7 +5,6 @@ from nixos/nix as builder
 arg EMACS_VERSION=emacs-30-1
 run nix build                                           \
     --extra-experimental-features "nix-command flakes"  \
-    --accept-flake-config                               \
     --impure                                            \
     nixpkgs#cacert                                      \
     nixpkgs#cmake                                       \
