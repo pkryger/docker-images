@@ -60,6 +60,7 @@ run ln -s /opt/nix/etc/ssl /etc/
 env SSL_CERT_FILE=/etc/ssl/certs/ca-bundle.crt
 env GIT_SSL_CAINFO=${SSL_CERT_FILE}
 env CURL_CA_BUNDLE=${SSL_CERT_FILE}
+env NIX_SSL_CERT_FILE=${SSL_CERT_FILE}
 
 # Ensure Emacs can display plenty of colours
 copy xterm-24bit.terminfo /tmp
